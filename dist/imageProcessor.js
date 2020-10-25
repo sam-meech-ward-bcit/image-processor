@@ -21,7 +21,7 @@ function processImage(_x) {
 
 function _processImage() {
   _processImage = _asyncToGenerator(function* (imagePath) {
-    var composite = yield _jimp.default.read(_path.default.join(__dirname, '../public/jazz.png'));
+    var composite = yield _jimp.default.read(_path.default.join(__dirname, 'jazz.png'));
     composite.flip(true, false) // .posterize(100)
     .resize(200, 200);
     var image = yield _jimp.default.read(imagePath);
