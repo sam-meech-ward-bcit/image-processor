@@ -21,12 +21,22 @@ function processImage(_x) {
 
 function _processImage() {
   _processImage = _asyncToGenerator(function* (imagePath) {
-    var composite = yield _jimp.default.read(_path.default.join(__dirname, 'jazz.png'));
-    composite.flip(true, false) // .posterize(100)
-    .resize(200, 200);
+    // const composite = await Jimp.read(path.join(__dirname, 'jazz.png'))
+    // composite 
+    // .flip(true, false)
+    //     // .posterize(100)
+    //     .resize(200, 200)
     var image = yield _jimp.default.read(imagePath);
-    image.flip(true, false).invert().contrast(1).posterize(100).greyscale() // set greyscale
-    .pixelate(10).background(0xFF5733).blit(composite, 0, 0);
+    var {
+      width,
+      height
+    } = image.bitmap;
+    var ratio = 600 / width;
+    console.log(image.bitmap.width, image.bitmap.height);
+    image // .scaleToFit( 600, 350)
+    .resize(600, height * ratio).contrast(1).greyscale() // set greyscale
+    .pixelate(5); // .blit(composite, 0, 0)
+
     return yield image.getBufferAsync(_jimp.default.MIME_JPEG);
   });
   return _processImage.apply(this, arguments);
